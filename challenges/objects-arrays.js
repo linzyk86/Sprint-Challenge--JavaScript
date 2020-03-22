@@ -13,9 +13,6 @@ const dinosaur1 = {
     weight:"7000kg", 
     length: "12m",
      period: "Late Cretaceous", 
-     roar(){
-  console.log("RAWERSRARARWERSARARARRRR!");
-}
 };
 
 // stegosaurus, herbivorous, 2000kg, 9m, Late Jurassic
@@ -52,6 +49,9 @@ console.log(dinosaur1.period);
 
 // Create a new roar method for the tyrannosaurus.  When called, return "RAWERSRARARWERSARARARRRR!" Log the result.
 
+dinosaur1.roar = function(){
+  return("RAWERSRARARWERSARARARRRR!");
+}
 
 console.log(dinosaur1.roar());
 
@@ -78,8 +78,7 @@ const graduates = [
 Once you have the new array created, log the result. */
 let universities = graduates.map((arrItem)=>{
   return arrItem.university;
-
-})
+});
 
 console.log(universities);
 
@@ -91,21 +90,22 @@ The resulting contact information strings should have a space between the first 
 Log the result of your new array. */
 let contactInfo = graduates.map((arrItem)=>{
   return `${arrItem.first_name}, ${arrItem.email}`;
-
-})
+});
 
 console.log(contactInfo);
 
 /* Request 3: Find out how many universities have the string "Uni" included in their name. Create a new array called unisWithUni that contains them all. This will be an array of objects. Log the result. */
-  let unisWithUni = [];
-
-let uni = function(universities){
-  let newArr = universities.includes('Uni');
-  newArr.push(unisWithUni);
-}
 
 
-console.log(unisWithUni);
+let unisWithUni = graduates.map((arrItem)=>{
+  let hasUni = arrItem.university.includes("Uni"||"uni");
+  if(hasUni === true){
+    return arrItem.university;
+  };
+});
+     console.log(unisWithUni);
+
+
 
 
 // ==== ADVANCED Array Methods ====
@@ -122,24 +122,35 @@ const zooAnimals = [
   { animal_name: "Common melba finch", population: 5, scientific_name: "Pytilia melba", state: "Pennsylvania" },
   { animal_name: "Pampa gray fox", population: 10, scientific_name: "Pseudalopex gymnocercus", state: "Connecticut" },
   { animal_name: "Hawk-eagle, crowned", population: 10, scientific_name: "Spizaetus coronatus", state: "Florida" },
-  { animal_name: "Australian pelican", population: 5, scientific_name: "Pelecanus conspicillatus", state: "West Virginia" },
+  { animal_name: "Australian pelican", population: 5, scientific_name: "Pelecanus conspicillatus", state: "West Virginia" }
 ];
 
 /* Request 1: .forEach()
 
 The zoos want to display both the scientific name and the animal name in front of the habitats. Populate the displayNames array with only the animal_name and scientific_name of each animal. displayNames will be an array of strings, and each string should follow this pattern: "Name: Jackal, asiatic, Scientific: Canis aureus."
 
+
 */
-const displayNames = [];
-console.log(displayNames);
+  let displayNames = zooAnimals.forEach((arrItem)=>{
+  let newArr = [];
+  newArr.push(`Name: ${arrItem.animal_name}, Scientific: ${arrItem.scientific_name}`);
+  console.log(newArr);
+   return newArr;
+
+});
+
+
 
 /* Request 2: .map()
 
 The zoos need a list of all their animal's names (animal_name only) converted to lower case. Using map, create a new array of strings named lowCaseAnimalNames, each string following this pattern: "jackal, asiatic". Log the resut.
 
 */
+let lowCaseAnimalNames = zooAnimals.map((arrItem)=>{
+  let newItem = arrItem.animal_name.toLowerCase();
+  return newItem;
+})
 
-const lowCaseAnimalNames = [];
 console.log(lowCaseAnimalNames);
 
 /* Request 3: .filter() 
@@ -147,7 +158,11 @@ console.log(lowCaseAnimalNames);
 The zoos are concerned about animals with a lower population count. Using filter, create a new array of objects called lowPopulationAnimals which contains only the animals with a population less than 5.
 
 */
-const lowPopulationAnimals = [];
+
+let lowPopulationAnimals = zooAnimals.filter((arrItem)=>{
+  return arrItem.population <5;
+   
+})
 console.log(lowPopulationAnimals);
 
 /* Request 4: .reduce() 
@@ -155,7 +170,11 @@ console.log(lowPopulationAnimals);
 The zoos need to know their total animal population across the United States. Find the total population from all the zoos using the .reduce() method. Remember the reduce method takes two arguments: a callback (which itself takes two args), and an initial value for the count.
 
 */
-const populationTotal = 0;
+
+let populationTotal = zooAnimals.reduce((accum, arrItem)=>{
+    return accum += arrItem.population;
+},0);
+
 console.log(populationTotal);
 
 
